@@ -1,19 +1,46 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* Themes */
+:root, [data-theme="light"] {
+  --text: #1c2a3a;
+  --bg: linear-gradient(160deg, #a1c4fd 0%, #c2e9fb 50%, #e0f2ff 100%);
+  --blob1: #ffd6a5; --blob2: #74b9ff; --blob3: #b8c6ff;
+  --glass: rgba(255, 255, 255, 0.35);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --divider: rgba(28, 42, 58, 0.12);
+}
+[data-theme="dark"] {
+  --text: #fff;
+  --bg: linear-gradient(160deg, #0b1023 0%, #141b3a 50%, #23284a 100%);
+  --blob1: #3b2f7a; --blob2: #0f4c81; --blob3: #4b1d5e;
+  --glass: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --divider: rgba(255, 255, 255, 0.12);
+}
+[data-theme="girly"] {
+  --text: #6b1f4f;
+  --bg: linear-gradient(160deg, #ff9a9e 0%, #fbc2eb 50%, #a18cd1 100%);
+  --blob1: #ff6fae; --blob2: #ffc3e1; --blob3: #c77dff;
+  --glass: rgba(255, 255, 255, 0.3);
+  --glass-border: rgba(255, 255, 255, 0.55);
+  --divider: rgba(107, 31, 79, 0.15);
+}
+
 body {
   min-height: 100vh;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
-  color: #fff;
-  background: linear-gradient(160deg, #1e3c72 0%, #2a5298 50%, #6a85b6 100%);
+  color: var(--text);
+  background: var(--bg) fixed;
+  transition: color 0.3s;
   overflow-x: hidden;
 }
 
 /* Soft colored blobs behind the glass */
 .bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
 .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.55; }
-.b1 { width: 420px; height: 420px; background: #ff9a8b; top: -100px; left: -120px; }
-.b2 { width: 380px; height: 380px; background: #4facfe; bottom: -120px; right: -100px; }
-.b3 { width: 300px; height: 300px; background: #a18cd1; top: 40%; left: 55%; }
+.b1 { width: 420px; height: 420px; background: var(--blob1); top: -100px; left: -120px; }
+.b2 { width: 380px; height: 380px; background: var(--blob2); bottom: -120px; right: -100px; }
+.b3 { width: 300px; height: 300px; background: var(--blob3); top: 40%; left: 55%; }
 
 .app {
   max-width: 480px;
@@ -25,8 +52,8 @@ body {
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
   border-radius: 22px;
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
@@ -43,17 +70,34 @@ h2 {
   margin-bottom: 12px;
 }
 
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
+.greeting { font-size: 20px; font-weight: 600; }
+
+.themes { display: flex; padding: 4px; gap: 2px; border-radius: 999px; }
+.themes button {
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  opacity: 0.75;
+}
+.themes button.active { background: var(--glass-border); opacity: 1; font-weight: 600; }
+
 .search { padding: 0; }
 .search input {
   width: 100%;
   padding: 12px 18px;
   font-size: 16px;
-  color: #fff;
+  color: inherit;
   background: transparent;
   border: none;
   outline: none;
 }
-.search input::placeholder { color: rgba(255, 255, 255, 0.65); }
+.search input::placeholder { color: inherit; opacity: 0.6; }
 
 .current { text-align: center; padding: 28px 18px; }
 .current h1 { font-size: 30px; font-weight: 500; }
@@ -79,7 +123,7 @@ h2 {
   align-items: center;
   padding: 10px 0;
   font-size: 17px;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: 1px solid var(--divider);
 }
 .daily li:first-child { border-top: none; }
 .daily .icon { font-size: 22px; text-align: center; }

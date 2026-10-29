@@ -79,4 +79,27 @@ $("search").addEventListener("submit", async (e) => {
   }
 });
 
+// Greeting based on time of day
+const hour = new Date().getHours();
+const part = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+$("greeting").textContent = `${part}, Mafe Galeano`;
+
+// Theme: saved choice, otherwise follow the system light/dark setting
+function setTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  document.querySelectorAll(".themes button").forEach((b) =>
+    b.classList.toggle("active", b.dataset.theme === theme)
+  );
+}
+let saved = null;
+try { saved = localStorage.getItem("theme"); } catch {}
+setTheme(saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
+
+document.querySelectorAll(".themes button").forEach((b) =>
+  b.addEventListener("click", () => {
+    setTheme(b.dataset.theme);
+    try { localStorage.setItem("theme", b.dataset.theme); } catch {}
+  })
+);
+
 loadWeather(DEFAULT);
